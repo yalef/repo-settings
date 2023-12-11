@@ -1,8 +1,5 @@
 from . import schema
-import src.settings
-import src.application
-import src.adapters
-import src.domain
+from . import ioc
 import typing
 import enum
 import fastapi
@@ -22,21 +19,15 @@ class EventTypes(enum.StrEnum):
 def handle_webhook(
     webhook: schema.PushWebhook,
     x_github_event: typing.Annotated[EventTypes, fastapi.Header()],
+    container: typing.Annotated[ioc.IoC, fastapi.Depends()]
 ) -> typing.Literal["OK"]:
-    settings = src.settings.Settings()
     logging.info(f"HANDLED {x_github_event}")
     owner, repo_name = webhook.repository.full_name.split("/")
-    push_gateway = src.adapters.GithubRepositoryGateway(
-        repository_name=repo_name,
-        owner_name=owner,
-        app_id=settings.app_id,
-        app_private_key=settings.app_private_key,
-        installation_id=webhook.installation.id,
-    )
-    interactor = src.application.PushHandler(
-        git_gateway=push_gateway,
-        payload=webhook,
-        label_service=src.domain.LabelService(),
-    )
-    interactor()
+    with container.init_repo_client(
+        repo_name,
+        owner,
+        webhook.installation.id,
+    ) as repo_gateway:
+        with container.handle_push_payload(repo_gateway) as push_handler:
+            push_handler(webhook)
     return "OK"

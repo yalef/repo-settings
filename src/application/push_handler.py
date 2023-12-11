@@ -14,11 +14,9 @@ class PushHandler:
     def __init__(
         self,
         git_gateway: PushGitGateway,
-        payload: protocols.PushPayload,
         label_service: src.domain.LabelService,
     ):
         self._git_gateway = git_gateway
-        self._payload = payload
         self._label_serivce = label_service
 
     def _check_settings_changed(
@@ -40,11 +38,11 @@ class PushHandler:
             return True
         return False
 
-    def __call__(self):
+    def __call__(self, payload: protocols.PushPayload):
         # check if settings added/changed in main branch
         if not self._check_settings_changed(
-            self._payload.commits,
-            self._payload.ref,
+            payload.commits,
+            payload.ref,
         ):
             return
         # load settings
