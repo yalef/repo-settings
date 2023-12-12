@@ -6,3 +6,6 @@
 # Events
 - push (accessable via enabling `Contents` permission)
 - reopsitories_installation (always work by default)
+
+# TODO
+- delete scheduled check if repo has been deleted from installed repos

@@ -19,7 +19,7 @@ class EventTypes(enum.StrEnum):
 def handle_webhook(
     webhook: schema.PushWebhook,
     x_github_event: typing.Annotated[EventTypes, fastapi.Header()],
-    container: typing.Annotated[ioc.IoC, fastapi.Depends()]
+    container: typing.Annotated[ioc.IoC, fastapi.Depends()],
 ) -> typing.Literal["OK"]:
     logging.info(f"HANDLED {x_github_event}")
     owner, repo_name = webhook.repository.full_name.split("/")

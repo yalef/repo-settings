@@ -1,4 +1,5 @@
 import dataclasses
+from .schedule import Schedule
 
 
 @dataclasses.dataclass
@@ -22,3 +23,4 @@ class RepositorySection:
 class Settings:
     repository: RepositorySection
     labels: list[Label]
+    schedule: Schedule

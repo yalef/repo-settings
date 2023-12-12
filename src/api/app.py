@@ -1,19 +1,25 @@
 import fastapi
+from apscheduler.schedulers.asyncio import AsyncIOScheduler
 import src.settings
-from . import router
-from . import ioc
+from src.api import router
+from src.api import ioc
 
 
 def singleton(value):
     def factory():
         return value
+
     return factory
 
 
 settings = src.settings.Settings()
-container = ioc.IoC(settings=settings)
+scheduler = AsyncIOScheduler()
+scheduler.start()
+container = ioc.IoC(settings=settings, scheduler=scheduler)
 app = fastapi.FastAPI()
-app.dependency_overrides.update({
-    ioc.IoC: singleton(container),
-})
+app.dependency_overrides.update(
+    {
+        ioc.IoC: singleton(container),
+    }
+)
 app.include_router(router.router, prefix="")

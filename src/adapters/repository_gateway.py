@@ -15,11 +15,13 @@ class GithubRepositoryGateway(
         self,
         repository_name: str,
         owner_name: str,
+        schedule_service: src.domain.ScheduleService,
         *args,
         **kwargs,
     ):
         super().__init__(*args, **kwargs)
         self._repo = self._client.get_repo(f"{owner_name}/{repository_name}")
+        self._schedule_service = schedule_service
 
     def get_labels(self) -> list[src.domain.Label]:
         return [
@@ -86,4 +88,7 @@ class GithubRepositoryGateway(
                 )
                 for label in settings_dict["labels"]
             ],
+            schedule=self._schedule_service.create_schedule(
+                settings_dict["schedule"],
+            ),
         )
