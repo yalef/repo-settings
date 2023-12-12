@@ -66,9 +66,13 @@ class GithubRepositoryGateway(
     def load_settings(
         self,
         file_path: str,
+        branch: str = "main",
     ) -> src.domain.Settings:
         settings_dict = yaml.safe_load(
-            self._repo.get_contents(path=file_path).decoded_content.decode(),
+            self._repo.get_contents(
+                path=file_path,
+                ref=branch,
+            ).decoded_content.decode(),
         )
         return src.domain.Settings(
             repository=src.domain.RepositorySection(
