@@ -1,7 +1,8 @@
-import src.domain
+import contextlib
+
 import src.adapters
 import src.application
-import contextlib
+import src.domain
 
 
 class IoC:

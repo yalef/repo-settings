@@ -1,7 +1,9 @@
-import yaml
 import github
-import src.domain
+import yaml
+
 import src.application.protocols as application_protocols
+import src.domain
+
 from . import github_session_provider
 
 

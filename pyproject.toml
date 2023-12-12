@@ -2,7 +2,7 @@
 name = "git-settings-bot"
 version = "0.1.0"
 description = ""
-authors = ["Your Name <you@example.com>"]
+authors = ["Vladislav Romaschenko <vlad1vaselkov@gmail.com>"]
 readme = "README.md"
 packages = [{include = "src"}]
 
@@ -18,7 +18,22 @@ apscheduler = "^3.10.4"
 
 [tool.poetry.group.dev.dependencies]
 black = "^23.11.0"
+isort = "^5.13.1"
 
 [build-system]
 requires = ["poetry-core"]
 build-backend = "poetry.core.masonry.api"
+
+[tool.black]
+line-length = 79
+target-version = ["py311"]
+
+[tool.isort]
+profile = "black"
+line_length = 79
+multi_line_output = 3
+skip = [
+    ".tmp",
+    ".venv",
+]
+include_trailing_comma = true

@@ -1,8 +1,8 @@
 import fastapi
 from apscheduler.schedulers.asyncio import AsyncIOScheduler
+
 import src.settings
-from src.api import router
-from src.api import ioc
+from src.api import ioc, router
 
 
 def singleton(value):

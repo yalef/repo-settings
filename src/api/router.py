@@ -1,11 +1,10 @@
-from . import schema
-from . import ioc
-import typing
 import enum
+import logging
+import typing
+
 import fastapi
 
-import logging
-
+from . import ioc, schema
 
 router = fastapi.APIRouter()
 logging.basicConfig(level=logging.DEBUG)

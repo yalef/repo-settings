@@ -1,5 +1,5 @@
-import typing
 import dataclasses
+import typing
 
 from .schedule import Schedule
 

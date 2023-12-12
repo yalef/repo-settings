@@ -1,6 +1,7 @@
 import typing
-from .scheduled_task import ScheduledTask
+
 from .schedule import Schedule
+from .scheduled_task import ScheduledTask
 
 
 class ScheduledTaskService:

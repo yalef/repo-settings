@@ -1,5 +1,6 @@
-import src.domain
 import typing
+
+import src.domain
 
 
 class TaskWriter(typing.Protocol):
