@@ -27,6 +27,16 @@ def handle_webhook(
         owner,
         webhook.installation.id,
     ) as repo_gateway:
-        with container.handle_push_payload(repo_gateway) as push_handler:
-            push_handler(webhook)
+        with container.init_redis_connection() as connection:
+            with container.init_redis_queue(connection) as queue:
+                with container.init_redis_scheduler(
+                    queue=queue,
+                    connection=connection,
+                ) as scheduler:
+                    with container.handle_push_payload(
+                        gateway=repo_gateway,
+                        scheduler=scheduler,
+                        queue=queue,
+                    ) as push_handler:
+                        push_handler(webhook)
     return "OK"

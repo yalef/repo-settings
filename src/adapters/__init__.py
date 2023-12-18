@@ -1,2 +1,2 @@
 from .repository_gateway import GithubRepositoryGateway
-from .scheduler import APSchedulerGateway
+from .redis_scheduler import RQSchedulerGateway

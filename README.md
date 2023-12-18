@@ -9,3 +9,4 @@
 
 # TODO
 - delete scheduled check if repo has been deleted from installed repos
+- Fix domain schedule creation in scheduler adapter

@@ -4,24 +4,33 @@ import yaml
 import src.application.protocols as application_protocols
 import src.domain
 
-from . import github_session_provider
-
 
 class GithubRepositoryGateway(
-    github_session_provider.GithhubInstallationGateway,
     application_protocols.LabelWriter,
     application_protocols.RepositoryWriter,
     application_protocols.SettingsFileReader,
 ):
     def __init__(
         self,
+        app_id: str,
+        app_private_key: str,
         repository_name: str,
         owner_name: str,
         schedule_service: src.domain.ScheduleService,
-        *args,
-        **kwargs,
     ):
-        super().__init__(*args, **kwargs)
+        self._app_auth = github.Auth.AppAuth(
+            app_id=app_id,
+            private_key=app_private_key,
+        )
+        integration = github.GithubIntegration(auth=self._app_auth)
+        installation = integration.get_installation(
+            owner=owner_name,
+            repo=repository_name,
+        )
+        self._installation_auth = self._app_auth.get_installation_auth(
+            installation_id=installation.id,
+        )
+        self._client = github.Github(auth=self._installation_auth)
         self._repo = self._client.get_repo(f"{owner_name}/{repository_name}")
         self._schedule_service = schedule_service
 

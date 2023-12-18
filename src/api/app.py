@@ -1,5 +1,4 @@
 import fastapi
-from apscheduler.schedulers.asyncio import AsyncIOScheduler
 
 import src.settings
 from src.api import ioc, router
@@ -13,9 +12,10 @@ def singleton(value):
 
 
 settings = src.settings.Settings()
-scheduler = AsyncIOScheduler()
-scheduler.start()
-container = ioc.IoC(settings=settings, scheduler=scheduler)
+container = ioc.IoC(
+    app_id=settings.app_id,
+    app_private_key=settings.app_private_key,
+)
 app = fastapi.FastAPI()
 app.dependency_overrides.update(
     {

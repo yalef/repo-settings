@@ -63,6 +63,18 @@ twisted = ["twisted"]
 zookeeper = ["kazoo"]
 
 [[package]]
+name = "async-timeout"
+version = "4.0.3"
+description = "Timeout context manager for asyncio programs"
+category = "main"
+optional = false
+python-versions = ">=3.7"
+files = [
+    {file = "async-timeout-4.0.3.tar.gz", hash = "sha256:4640d96be84d82d02ed59ea2b7105a0f7b33abe8703703cd0ab0bf87c427522f"},
+    {file = "async_timeout-4.0.3-py3-none-any.whl", hash = "sha256:7405140ff1230c310e51dc27b3145b9092d659ce68ff733fb0cefe3ee42be028"},
+]
+
+[[package]]
 name = "black"
 version = "23.11.0"
 description = "The uncompromising code formatter."
@@ -308,6 +320,17 @@ files = [
 ]
 
 [[package]]
+name = "crontab"
+version = "1.0.1"
+description = "Parse and use crontab schedules in Python"
+category = "main"
+optional = false
+python-versions = "*"
+files = [
+    {file = "crontab-1.0.1.tar.gz", hash = "sha256:89477e3f93c81365e738d5ee2659509e6373bb2846de13922663e79aa74c6b91"},
+]
+
+[[package]]
 name = "cryptography"
 version = "41.0.7"
 description = "cryptography is a package which provides cryptographic recipes and primitives to Python developers."
@@ -427,6 +450,21 @@ typing-extensions = ">=4.8.0"
 
 [package.extras]
 all = ["email-validator (>=2.0.0)", "httpx (>=0.23.0)", "itsdangerous (>=1.1.0)", "jinja2 (>=2.11.2)", "orjson (>=3.2.1)", "pydantic-extra-types (>=2.0.0)", "pydantic-settings (>=2.0.0)", "python-multipart (>=0.0.5)", "pyyaml (>=5.3.1)", "ujson (>=4.0.1,!=4.0.2,!=4.1.0,!=4.2.0,!=4.3.0,!=5.0.0,!=5.1.0)", "uvicorn[standard] (>=0.12.0)"]
+
+[[package]]
+name = "freezegun"
+version = "1.3.1"
+description = "Let your Python tests travel through time"
+category = "main"
+optional = false
+python-versions = ">=3.7"
+files = [
+    {file = "freezegun-1.3.1-py3-none-any.whl", hash = "sha256:065e77a12624d05531afa87ade12a0b9bdb53495c4573893252a055b545ce3ea"},
+    {file = "freezegun-1.3.1.tar.gz", hash = "sha256:48984397b3b58ef5dfc645d6a304b0060f612bcecfdaaf45ce8aff0077a6cb6a"},
+]
+
+[package.dependencies]
+python-dateutil = ">=2.7"
 
 [[package]]
 name = "h11"
@@ -855,6 +893,25 @@ files = [
 ]
 
 [[package]]
+name = "redis"
+version = "5.0.1"
+description = "Python client for Redis database and key-value store"
+category = "main"
+optional = false
+python-versions = ">=3.7"
+files = [
+    {file = "redis-5.0.1-py3-none-any.whl", hash = "sha256:ed4802971884ae19d640775ba3b03aa2e7bd5e8fb8dfaed2decce4d0fc48391f"},
+    {file = "redis-5.0.1.tar.gz", hash = "sha256:0dab495cd5753069d3bc650a0dde8a8f9edde16fc5691b689a566eda58100d0f"},
+]
+
+[package.dependencies]
+async-timeout = {version = ">=4.0.2", markers = "python_full_version <= \"3.11.2\""}
+
+[package.extras]
+hiredis = ["hiredis (>=1.0.0)"]
+ocsp = ["cryptography (>=36.0.1)", "pyopenssl (==20.0.1)", "requests (>=2.26.0)"]
+
+[[package]]
 name = "requests"
 version = "2.31.0"
 description = "Python HTTP for Humans."
@@ -875,6 +932,40 @@ urllib3 = ">=1.21.1,<3"
 [package.extras]
 socks = ["PySocks (>=1.5.6,!=1.5.7)"]
 use-chardet-on-py3 = ["chardet (>=3.0.2,<6)"]
+
+[[package]]
+name = "rq"
+version = "1.15.1"
+description = "RQ is a simple, lightweight, library for creating background jobs, and processing them."
+category = "main"
+optional = false
+python-versions = ">=3.6"
+files = [
+    {file = "rq-1.15.1-py2.py3-none-any.whl", hash = "sha256:6e243d8d9c4af4686ded4b01b25ea1ff4bac4fc260b02638fbe9c8c17b004bd1"},
+    {file = "rq-1.15.1.tar.gz", hash = "sha256:1f49f4ac1a084044bb8e95b3f305c0bf17e55618b08c18e0b60c080f12d6f008"},
+]
+
+[package.dependencies]
+click = ">=5.0.0"
+redis = ">=4.0.0"
+
+[[package]]
+name = "rq-scheduler"
+version = "0.13.1"
+description = "Provides job scheduling capabilities to RQ (Redis Queue)"
+category = "main"
+optional = false
+python-versions = "*"
+files = [
+    {file = "rq-scheduler-0.13.1.tar.gz", hash = "sha256:89d6a18f215536362b22c0548db7dbb8678bc520c18dc18a82fd0bb2b91695ce"},
+    {file = "rq_scheduler-0.13.1-py2.py3-none-any.whl", hash = "sha256:c2b19c3aedfc7de4d405183c98aa327506e423bf4cdc556af55aaab9bbe5d1a1"},
+]
+
+[package.dependencies]
+crontab = ">=0.23.0"
+freezegun = "*"
+python-dateutil = "*"
+rq = ">=0.13"
 
 [[package]]
 name = "six"
@@ -1079,4 +1170,4 @@ files = [
 [metadata]
 lock-version = "2.0"
 python-versions = "^3.11"
-content-hash = "4c9009eff77e3fdd6f702f335ff829201500fc452d8d747f8496f44a42f8d16e"
+content-hash = "3d5fea7c2001b19fc1973608059c60ecc43ffce3c2a9bd115854ae3e05f4843b"
