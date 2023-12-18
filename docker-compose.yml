@@ -1,0 +1,27 @@
+version: "3.7"
+name: "git-settings-bot"
+services:
+  redis:
+    image: redis:latest
+    ports:
+      - 6379:6379
+  app: &web
+    image: git-settings-bot
+    command: uvicorn src.api.app:app --reload
+    volumes:
+      - .:/app
+    ports:
+      - 8000:8000
+    depends_on:
+      redis:
+        condition: service_started
+    network_mode: host
+  rq: &rq
+    <<: *web
+    command: rq worker settings_update
+    ports: []
+
+  rq-scheduler:
+    <<: *rq
+    command: rqscheduler -i 1
+    ports: []
