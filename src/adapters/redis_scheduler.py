@@ -44,9 +44,7 @@ class RQSchedulerGateway(
         return [self._parse_redis_task(task) for task in result]
 
     def save_task(self, task: src.domain.ScheduledTask):
-        # TODO: looks like task doesnt delete
         existing_tasks = self.get_tasks_by_id(task.id)
-        breakpoint()
         for task in existing_tasks:
             self.delete_task(task.id)
 
