@@ -1,3 +1,4 @@
+import typing
 import pydantic
 
 
@@ -47,3 +48,10 @@ class PushWebhook(pydantic.BaseModel):
     ref: str
     repository: Repository
     installation: Installation
+
+
+class InstallationWebhook(pydantic.BaseModel):
+    action: typing.Literal["added"] | typing.Literal["removed"]
+    installation: Installation
+    repositories_added: list[Repository]
+    repositories_removed: list[Repository]

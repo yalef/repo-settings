@@ -16,3 +16,9 @@ class PushPayload(typing.Protocol):
     ref: str
     commits: list[CommitPayload]
     repository: RepositoryPayload
+
+
+class InstallationPayload(typing.Protocol):
+    action: str
+    repositories_added: list[RepositoryPayload]
+    repositories_removed: list[RepositoryPayload]

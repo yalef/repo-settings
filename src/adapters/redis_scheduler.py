@@ -41,7 +41,7 @@ class RQSchedulerGateway(
         for task in tasks:
             if task.id == task_id:
                 result.append(task)
-        return [self._parse_redis_task(task) for task in result]
+        return result
 
     def save_task(self, task: src.domain.ScheduledTask):
         existing_tasks = self.get_tasks_by_id(task.id)
@@ -56,6 +56,7 @@ class RQSchedulerGateway(
         )
 
     def delete_task(self, task_id: str):
-        _task = self._queue.fetch_job(task_id)
-        if _task is not None:
-            _task.cancel()
+        jobs = self._scheduler.get_jobs()
+        for job in jobs:
+            if job.id == task_id:
+                self._scheduler.cancel(job)

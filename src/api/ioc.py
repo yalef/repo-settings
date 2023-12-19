@@ -76,3 +76,23 @@ class IoC:
             updater=settings_updater,
             task_creator=task_creator,
         )
+
+    @contextlib.contextmanager
+    def handle_installation_payload(
+        self,
+        scheduler: rq_scheduler.Scheduler,
+        queue: rq.Queue,
+    ):
+        task_gateway = src.adapters.RQSchedulerGateway(
+            queue=queue,
+            scheduler=scheduler,
+            schedule_service=src.domain.ScheduleService(),
+        )
+        validator = src.application.InstallationPayloadValidator()
+        deleter = src.application.TaskDelete(
+            task_gateway=task_gateway,
+        )
+        yield src.application.InstallationHandler(
+            validator=validator,
+            task_deleter=deleter,
+        )

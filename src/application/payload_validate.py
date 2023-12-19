@@ -17,3 +17,13 @@ class PushPayloadValidator:
         ):
             return True
         return False
+
+
+class InstallationPayloadValidator:
+    def __call__(self, payload: protocols.InstallationPayload):
+        if (
+            payload.action != "removed"
+            or len(payload.repositories_removed) == 0
+        ):
+            return False
+        return True
